@@ -1,6 +1,6 @@
 #! /bin/bash
 #
-# clone dwm dmenu st
+# clone dwm dmenu st (https://suckless.org)
 #
 
 cp -r dwm.sh ../
