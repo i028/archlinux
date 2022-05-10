@@ -41,8 +41,8 @@ pacman -S alsa-utils pulseaudio pulseaudio-bluetooth cups --noconfirm 1> /dev/nu
 installDWM(){
     whiptail --title "Install DWM" --infobox "\n WAITTING PLEASE" 12 35
 pacman -S xorg xorg-xinit dolphin konsole firefox chromium gwenview ntfs-3g ksystemlog ark kcalc kcolorchooser spectacle kate flameshot alacritty nitrogen picom --noconfirm 1> /dev/null 2> ./errorfile || funerror "pacmanerror" 2
-    cp /etc/X11/xinit/xinitrc ./.xinitrc
-    sed -i "s/geometry/d" .xinitrc && sed -i "s/twm &/\n\n\nfcitx5&\n\nnitrogen --restore &\n\npicom &\n\nexec dwm/g" .xinitrc
+    cp /etc/X11/xinit/xinitrc .xinitrc
+    sed -i "/geometry/d" .xinitrc && sed -i "s/twm &/\n\n\nfcitx5 \&\n\nnitrogen --restore \&\n\npicom \&\n\n\nexec dwm/g" .xinitrc
     mkdir app && cd app
     git clone https://git.suckless.org/dwm &> /dev/null
     git clone https://git.suckless.org/dmenu &> /dev/null
