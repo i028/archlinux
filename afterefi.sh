@@ -37,6 +37,20 @@ sed -i "s/#export/export/g" /mnt/etc/profile.d/freetype2.sh
 whiptail --title "Install Sound&Print Driver" --infobox "\n Waitting Please" 12 35
 pacman -S alsa-utils pulseaudio pulseaudio-bluetooth cups --noconfirm 1> /dev/null 2> ./errorfile || funerror "InstallSound&PrintDriver" 2
 
+installDWM(){
+    whiptail --title "Install DWM" --infobox "\n WAITTING PLEASE" 12 35
+pacman -S xorg xorg-xinit dolphin konsole firefox chromium gwenview ntfs-3g ksystemlog ark kcalc kcolorchooser spectacle kate flameshot alacritty nitrogen picom --noconfirm 1> /dev/null 2> ./errorfile || funerror "pacmanerror" 2
+    cp /etc/X11/xinit/xinitrc ./.xinitrc
+    sed -i "s/geometry/d" .xinitrc && sed -i "s/twm &/\n\n\nfcitx5&\n\nnitrogen --restore &\n\npicom &\n\nexec dwm/g" .xinitrc
+    mkdir app && cd app
+    git clone https://git.suckless.org/dwm &> /dev/null
+    git clone https://git.suckless.org/dmenu &> /dev/null
+    git clone https://git.suckless.org/st &> /dev/null
+    cd dwm && make clean install &> /dev/null
+    cd ../dmenu && make clean install &> /dev/null
+    cd ../st && make clean install &> /dev/null
+    cd
+}
 installKde(){
     whiptail --title "Install Kde" --infobox "\n WAITTING PLEASE" 12 35
     pacman -S plasma dolphin konsole kdeconnect firefox chromium gwenview ntfs-3g ksystemlog ark kget kcalc kcolorchooser spectacle kate flameshot --noconfirm 1> /dev/null 2> ./errorfile || funerror "pacmanerror" 2
@@ -59,7 +73,7 @@ installDeepin(){
     sed -i "s/#greeter-session=example-gtk-gnome/greeter-session=lightdm-deepin-greeter/g" /etc/lightdm/lightdm.conf
 }
 
-DESKTOP_ENV=$(whiptail --title "SELECT DESKTP" --menu "SELECT YOUR DESKTP" 12 40 5 1 no-desktop 2 XFCE 3 KDE 4 GNOME 5 Deepin 3>&1 1>&2 2>&3)
+DESKTOP_ENV=$(whiptail --title "SELECT DESKTP" --menu "SELECT YOUR DESKTP" 15 35 6 1 no-desktop 2 XFCE 3 KDE 4 GNOME 5 Deepin 6 DWM 3>&1 1>&2 2>&3)
 if [ ${DESKTOP_ENV} != "1" ]
 then
     whiptail --title "Install GPU DRIVE" --infobox "\n WAITTING PLEASE" 12 35
@@ -93,12 +107,12 @@ then
         ;;
         "5") installDeepin
         ;;
+        "6") installDeepin
+        ;;
     esac
 fi
-whiptail --title "Install XORG" --infobox "\n WAITTING PLEASE" 12 35
-pacman -S xorg xorg-xinit dolphin konsole firefox chromium gwenview ntfs-3g ksystemlog ark kcalc kcolorchooser spectacle kate flameshot alacritty --noconfirm 1> /dev/null 2> ./errorfile || funerror "pacmanerror" 2
 
-whiptail --title "ADD ARCHLINUXCN" --infobox "\n WAITTING PLEASE" 12 35
+whiptail --title "ARCHLINUXCN" --infobox "\n WAITTING PLEASE" 12 35
 pacman -S haveged --noconfirm 1> /dev/null 2> ./errorfile || funerror "pacmanerror" 2
 systemctl enable haveged &> /dev/null
 rm -rf /etc/pacman.d/gnupg &> /dev/null
