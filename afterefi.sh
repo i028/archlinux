@@ -66,6 +66,7 @@ installGnome(){
     whiptail --title "Install Gnome" --infobox "\n WAITTING PLEASE" 12 35
     pacman -S gnome --noconfirm 1> /dev/null 2> ./errorfile || funerror "pacmanerror" 2
     systemctl enable gdm &> /dev/null
+    echo 'LANG=en_US.UTF-8' >> /etc/locale.conf && locale-gen &> /dev/null
 }
 installDeepin(){
     whiptail --title "Install Deepin" --infobox "\n WAITTING PLEASE" 12 35
