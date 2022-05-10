@@ -10,6 +10,7 @@ ping -c 4 www.baidu.com 1> /dev/null 2> ./errorfile || funerror "NetworkError!" 
 
 ADMIN_USER=$(whiptail --title "ADD_User" --nocancel --inputbox "User name:" 12 35 3>&1 1>&2 2>&3)
 ADMIN_USER_PASSWD=$(whiptail --title "ADD_User" --nocancel --inputbox "User password:" 12 35 3>&1 1>&2 2>&3)
+DESKTOP_ENV=$(whiptail --title "SELECT DESKTP" --menu "SELECT YOUR DESKTP" 15 35 6 1 no-desktop 2 XFCE 3 KDE 4 GNOME 5 Deepin 6 DWM 3>&1 1>&2 2>&3)
 
 whiptail --title "ADD USER" --infobox "\n WAITTING PLEASE" 12 35
 useradd --create-home ${ADMIN_USER}
@@ -73,7 +74,7 @@ installDeepin(){
     sed -i "s/#greeter-session=example-gtk-gnome/greeter-session=lightdm-deepin-greeter/g" /etc/lightdm/lightdm.conf
 }
 
-DESKTOP_ENV=$(whiptail --title "SELECT DESKTP" --menu "SELECT YOUR DESKTP" 15 35 6 1 no-desktop 2 XFCE 3 KDE 4 GNOME 5 Deepin 6 DWM 3>&1 1>&2 2>&3)
+whiptail --title "INSTALL DESKTOP" --infobox "\n WAITTING PLEASE" 12 35
 if [ ${DESKTOP_ENV} != "1" ]
 then
     whiptail --title "Install GPU DRIVE" --infobox "\n WAITTING PLEASE" 12 35
@@ -107,7 +108,7 @@ then
         ;;
         "5") installDeepin
         ;;
-        "6") installDeepin
+        "6") installDWM
         ;;
     esac
 fi
