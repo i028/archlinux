@@ -8,11 +8,11 @@ funerror(){
 setfont /usr/share/kbd/consolefonts/iso01-12x22.psfu.gz
 ping -c 4 www.baidu.com 1> /dev/null 2> ./errorfile || funerror "NetworkError!" 1
 
-ADMIN_USER=$(whiptail --title "ADD_User" --nocancel --inputbox "User name:" 12 35 3>&1 1>&2 2>&3)
-ADMIN_USER_PASSWD=$(whiptail --title "ADD_User" --nocancel --inputbox "User password:" 12 35 3>&1 1>&2 2>&3)
+ADMIN_USER=$(whiptail --title "ADD USER" --nocancel --inputbox "User name:" 12 35 3>&1 1>&2 2>&3)
+ADMIN_USER_PASSWD=$(whiptail --title "ADD USER" --nocancel --inputbox "User password:" 12 35 3>&1 1>&2 2>&3)
 DESKTOP_ENV=$(whiptail --title "SELECT DESKTP" --menu "SELECT YOUR DESKTP" 15 35 6 1 no-desktop 2 XFCE 3 KDE 4 GNOME 5 Deepin 6 DWM 3>&1 1>&2 2>&3)
 
-whiptail --title "ADD USER" --infobox "\n WAITTING PLEASE" 12 35
+#whiptail --title "ADD USER" --infobox "\n WAITTING PLEASE" 12 35
 useradd --create-home ${ADMIN_USER}
 chpasswd <<EOF
 ${ADMIN_USER}:${ADMIN_USER_PASSWD}
@@ -40,9 +40,9 @@ pacman -S alsa-utils pulseaudio pulseaudio-bluetooth cups --noconfirm 1> /dev/nu
 
 installDWM(){
     whiptail --title "Install DWM" --infobox "\n WAITTING PLEASE" 12 35
-pacman -S xorg xorg-xinit dolphin konsole firefox chromium gwenview ntfs-3g ksystemlog ark kcalc kcolorchooser spectacle kate flameshot alacritty nitrogen picom --noconfirm 1> /dev/null 2> ./errorfile || funerror "pacmanerror" 2
-    cp /etc/X11/xinit/xinitrc .xinitrc
-    sed -i "/geometry/d" .xinitrc && sed -i "s/twm &/\n\n\nfcitx5 \&\n\nnitrogen --restore \&\n\npicom \&\n\n\nexec dwm/g" .xinitrc
+    pacman -S xorg xorg-xinit dolphin konsole firefox chromium gwenview ntfs-3g ksystemlog ark kcalc kcolorchooser spectacle kate flameshot alacritty nitrogen picom --noconfirm 1> /dev/null 2> ./errorfile || funerror "pacmanerror" 2
+    cp /etc/X11/xinit/xinitrc ../.xinitrc
+    sed -i "/geometry/d" ../.xinitrc && sed -i "s/twm &/\n\n\nfcitx5 \&\n\nnitrogen --restore \&\n\npicom \&\n\n\nexec dwm/g" ../.xinitrc
     mkdir app && cd app
     git clone https://git.suckless.org/dwm &> /dev/null
     git clone https://git.suckless.org/dmenu &> /dev/null
@@ -50,7 +50,7 @@ pacman -S xorg xorg-xinit dolphin konsole firefox chromium gwenview ntfs-3g ksys
     cd dwm && make clean install &> /dev/null
     cd ../dmenu && make clean install &> /dev/null
     cd ../st && make clean install &> /dev/null
-    cd
+    cd ../../
 }
 installKde(){
     whiptail --title "Install Kde" --infobox "\n WAITTING PLEASE" 12 35
