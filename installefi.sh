@@ -12,10 +12,11 @@ whiptail --title "SET HOSTNAME" --infobox "\n WATTING PLEASE" 12 35
 HOST_NAME=$(whiptail --title "HOST NAME" --nocancel  --inputbox "Hostname:" 12 35 3>&1 1>&2 2>&3)
 ROOT_PASSWD=$(whiptail --title "ROOT PASSWD" --nocancel --inputbox "Root password:" 12 35 3>&1 1>&2 2>&3)
 
-whiptail --title "CHECK NETWORK" --infobox "\n WATTING PLEASE" 12 35
-ping -c 4 www.baidu.com 1> /dev/null 2> ./errorfile || funerror "NetworkError!" 1
-DISK_NUM=$(whiptail --title "Select a Disk" --menu "Select a Disk" 12 35 5 $(lsblk | grep disk | awk '{print(FNR,$1)}' | xargs) 3>&1 1>&2 2>&3)
+DISK_NUM=$(whiptail --title "SELECT YOUR DISK" --menu "Select a Disk" 12 35 5 $(lsblk | grep disk | awk '{print(FNR,$1)}' | xargs) 3>&1 1>&2 2>&3)
 DISK=$(lsblk | grep disk | awk '{print($1)}' | sed -n ${DISK_NUM}p)
+
+whiptail --title "CHECK NETWORK" --infobox "\n WATTING PLEASE" 12 35
+ping -c 4 www.baidu.com 1> /dev/null 2> ./errorfile || funerror "NetworkError!" 2
 
 systemctl stop reflector.service
 #whiptail --title "REFLECTOR" --infobox "\n\n Wait a moment." 15 40
