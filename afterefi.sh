@@ -50,7 +50,7 @@ installDWM(){
     cd dwm && make clean install &> /dev/null
     cd ../dmenu && make clean install &> /dev/null
     cd ../st && make clean install &> /dev/null
-    cd ../../
+    cd 
 }
 installKde(){
     whiptail --title "Install Kde" --infobox "\n WAITTING PLEASE" 12 35
