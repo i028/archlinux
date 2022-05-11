@@ -127,4 +127,4 @@ pacman -Scc --noconfirm 1> /dev/null 2> ./errorfile || funerror "Empty Cache" 2
 cp -r ./install ../home/${ADMIN_USER}/
 # rm -rf ../install
 
-whiptail --title "Thanks" --yesno "Install Archlinux Successful\nThanks for using this script\nMy blog: https://blog.jinjiang.fun\nReboot now?" 15 40 && reboot || exit 0
+whiptail --title "Thanks" --yesno "Install Archlinux Successful\nScript form MurphyWZhu\/archlinux\nReboot now?" 15 40 && reboot || exit 0
