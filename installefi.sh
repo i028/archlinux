@@ -15,8 +15,8 @@ ROOT_PASSWD=$(whiptail --title "ROOT PASSWD" --nocancel --inputbox "Root passwor
 DISK_NUM=$(whiptail --title "SELECT YOUR DISK" --menu "Select a Disk" 12 35 5 $(lsblk | grep disk | awk '{print(FNR,$1)}' | xargs) 3>&1 1>&2 2>&3)
 DISK=$(lsblk | grep disk | awk '{print($1)}' | sed -n ${DISK_NUM}p)
 
-whiptail --title "CHECK NETWORK" --infobox "\n WATTING PLEASE" 12 35
-ping -c 4 www.baidu.com 1> /dev/null 2> ./errorfile || funerror "NetworkError!" 2
+#whiptail --title "CHECK NETWORK" --infobox "\n WATTING PLEASE" 12 35
+#ping -c 4 www.baidu.com 1> /dev/null 2> ./errorfile || funerror "NetworkError!" 2
 
 systemctl stop reflector.service
 #whiptail --title "REFLECTOR" --infobox "\n\n Wait a moment." 15 40

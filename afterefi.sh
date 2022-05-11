@@ -6,7 +6,7 @@ funerror(){
 }
 
 setfont /usr/share/kbd/consolefonts/iso01-12x22.psfu.gz
-ping -c 4 www.baidu.com 1> /dev/null 2> ./errorfile || funerror "NetworkError!" 1
+#ping -c 4 www.baidu.com 1> /dev/null 2> ./errorfile || funerror "NetworkError!" 1
 
 ADMIN_USER=$(whiptail --title "ADD USER" --nocancel --inputbox "User name:" 12 35 3>&1 1>&2 2>&3)
 ADMIN_USER_PASSWD=$(whiptail --title "ADD USER" --nocancel --inputbox "User password:" 12 35 3>&1 1>&2 2>&3)
