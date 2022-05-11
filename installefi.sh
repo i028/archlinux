@@ -79,4 +79,4 @@ cp -r ./* /mnt/root/install/
 umount /mnt/boot/efi
 umount /mnt
 
-whiptail --title "Reboot" --yesno "SUCCESSFUL\n\nIf you want to do the following\nPlease Reboot and Run:\n    cd /root/install\n    chmod +x after.sh\n    ./after.sh\nReboot now?" 15 40 && reboot || exit 0
+whiptail --title "Reboot" --yesno "SUCCESSFUL!!!\n\nIf you want to do the following\nPlease Reboot and Run:\n    cd /root/install\n    chmod +x after.sh\n    ./after.sh\nReboot now?" 15 40 && reboot || exit 0
