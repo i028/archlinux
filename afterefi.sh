@@ -30,7 +30,7 @@ sed -i "s/alias/export EDITOR=vim\nalias grep=\'grep --color=auto\'\nalias egrep
 cp -r /etc/skel/. .
 
 whiptail --title "Install Fonts" --infobox "\n WAITTING PLEASE" 12 35
-pacman -S ttf-dejavu ttf-droid ttf-hack ttf-font-awesome otf-font-awesome ttf-lato ttf-liberation ttf-linux-libertine ttf-opensans ttf-roboto ttf-ubuntu-font-family ttf-hannom noto-fonts noto-fonts-extra noto-fonts-emoji noto-fonts-cjk adobe-source-code-pro-fonts adobe-source-sans-fonts adobe-source-serif-fonts adobe-source-han-sans-cn-fonts adobe-source-han-sans-hk-fonts adobe-source-han-sans-tw-fonts adobe-source-han-serif-cn-fonts wqy-zenhei wqy-microhei  --noconfirm 1> /dev/null 2> ./errorfile || funerror "pacmanerror" 2
+pacman -S ttf-dejavu ttf-droid ttf-lato ttf-liberation ttf-linux-libertine noto-fonts noto-fonts-extra noto-fonts-emoji noto-fonts-cjk adobe-source-code-pro-fonts adobe-source-sans-fonts adobe-source-serif-fonts adobe-source-han-sans-cn-fonts adobe-source-han-serif-cn-fonts wqy-zenhei wqy-microhei  --noconfirm 1> /dev/null 2> ./errorfile || funerror "pacmanerror" 2
 
 whiptail --title "FreeType2" --infobox "\n Wait a moment, please." 12 35
 sed -i "s/#export/export/g" /mnt/etc/profile.d/freetype2.sh
