@@ -127,4 +127,4 @@ pacman -Scc --noconfirm 1> /dev/null 2> ./errorfile || funerror "Empty Cache" 2
 cp -r ./install ../home/${ADMIN_USER}/
 # rm -rf ../install
 
-whiptail --title "Thanks" --yesno "SUCCESSFUL\n\n\nScript form MurphyWZhu\/archlinux\nThanks\.\n\nReboot now?" 15 40 && reboot || exit 0
+whiptail --title "Thanks" --yesno "SUCCESSFUL\n\n\nScript form {MurphyWZhu/archlinux}\nThanks\.\n\nReboot now?" 15 40 && reboot || exit 0
