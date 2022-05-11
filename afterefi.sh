@@ -40,9 +40,17 @@ pacman -S alsa-utils pulseaudio pulseaudio-bluetooth cups --noconfirm 1> /dev/nu
 
 installDWM(){
     whiptail --title "Install DWM" --infobox "\n WAITTING PLEASE" 12 35
-    pacman -S xorg xorg-xinit dolphin konsole firefox chromium gwenview ntfs-3g ksystemlog ark kcalc kcolorchooser spectacle kate flameshot alacritty nitrogen picom --noconfirm 1> /dev/null 2> ./errorfile || funerror "pacmanerror" 2
+    pacman -S xorg xorg-xinit dolphin konsole firefox chromium gwenview ntfs-3g ksystemlog ark kcalc kcolorchooser spectacle kate flameshot alacritty nitrogen feh picom archlinux-wallpaper --noconfirm 1> /dev/null 2> ./errorfile || funerror "pacmanerror" 2
     cp /etc/X11/xinit/xinitrc ../.xinitrc
-    sed -i "/geometry/d" ../.xinitrc && sed -i "s/twm &/\n\n\nfcitx5 \&\n\nnitrogen --restore \&\n\npicom \&\n\n\nexec dwm/g" ../.xinitrc
+    sed -i "/geometry/d" ../.xinitrc && sed -i "s/twm &/\n\n\nfcitx5 \&\n\feh --bg-fill --randomize /usr/share/backgrounds/archlinux/*\n\npicom \&\n\n\nexec dwm/g" ../.xinitrc
+    echo GTK_IM_MODULE=fcitx
+    QT_IM_MODULE=fcitx
+    XMODIFIERS=@im=fcitx
+    SDL_IM_MODULE=fcitx >> /etc/environment
+    # GTK_IM_MODULE=fcitx
+    # QT_IM_MODULE=fcitx
+    # XMODIFIERS=@im=fcitx
+    # SDL_IM_MODULE=fcitx
     git clone https://gitee.com/cosss/adwm && cd adwm &> /dev/null
     cd dwm/ && make clean install &> /dev/null
     cd ../dmenu && make clean install &> /dev/null
@@ -127,4 +135,4 @@ pacman -Scc --noconfirm 1> /dev/null 2> ./errorfile || funerror "Empty Cache" 2
 cp -r ./install ../home/${ADMIN_USER}/
 # rm -rf ../install
 
-whiptail --title "SUCCESSFUL" --yesno "SUCCESSFUL!!!\n\n\nScript form {MurphyWZhu/archlinux}\nThanks\.\n\nReboot now?" 15 40 && reboot || exit 0
+whiptail --title "SUCCESSFUL" --yesno "SUCCESSFUL!!!\n\nScript form {MurphyWZhu/archlinux}\nThanks!\n\nReboot now?" 15 40 && reboot || exit 0
