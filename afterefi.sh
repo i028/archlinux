@@ -43,11 +43,8 @@ installDWM(){
     pacman -S xorg xorg-xinit dolphin konsole firefox chromium gwenview ntfs-3g ksystemlog ark kcalc kcolorchooser spectacle kate flameshot alacritty nitrogen picom --noconfirm 1> /dev/null 2> ./errorfile || funerror "pacmanerror" 2
     cp /etc/X11/xinit/xinitrc ../.xinitrc
     sed -i "/geometry/d" ../.xinitrc && sed -i "s/twm &/\n\n\nfcitx5 \&\n\nnitrogen --restore \&\n\npicom \&\n\n\nexec dwm/g" ../.xinitrc
-    mkdir app && cd app
-    git clone https://git.suckless.org/dwm &> /dev/null
-    git clone https://git.suckless.org/dmenu &> /dev/null
-    git clone https://git.suckless.org/st &> /dev/null
-    cd dwm && make clean install &> /dev/null
+    git clone https://gitee.com/cosss/archlinux &> /dev/null
+    cd adwm/dwm && make clean install &> /dev/null
     cd ../dmenu && make clean install &> /dev/null
     cd ../st && make clean install &> /dev/null
     cd 
