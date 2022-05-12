@@ -40,22 +40,21 @@ pacman -S alsa-utils pulseaudio pulseaudio-bluetooth cups --noconfirm 1> /dev/nu
 
 installDWM(){
     whiptail --title "Install DWM" --infobox "\n WAITTING PLEASE" 12 35
-    pacman -S xorg xorg-xinit dolphin konsole firefox chromium gwenview ntfs-3g ksystemlog ark kcalc kcolorchooser spectacle kate flameshot alacritty nitrogen feh picom archlinux-wallpaper --noconfirm 1> /dev/null 2> ./errorfile || funerror "pacmanerror" 2
+    pacman -S xorg xorg-xinit dolphin konsole firefox gwenview ntfs-3g ksystemlog ark kcalc kcolorchooser kate flameshot alacritty feh rofi picom rxvt-unicode archlinux-wallpaper --noconfirm 1> /dev/null 2> ./errorfile || funerror "pacmanerror" 2
     cp /etc/X11/xinit/xinitrc ../.xinitrc
-    sed -i "/geometry/d" ../.xinitrc && sed -i "s/twm &/\n\n\nfcitx5 \&\n\feh --bg-fill --randomize /usr/share/backgrounds/archlinux/*\n\npicom \&\n\n\nexec dwm/g" ../.xinitrc
+    sed -i "/geometry/d" ../.xinitrc && sed -i "s/twm \&/\n\n\nfcitx5 \&\n\feh --bg-fill --randomize \/usr\/share\/backgrounds\/archlinux\/*\n\npicom \&\n\n\nexec dwm/g" ../.xinitrc
     echo GTK_IM_MODULE=fcitx
     QT_IM_MODULE=fcitx
     XMODIFIERS=@im=fcitx
     SDL_IM_MODULE=fcitx >> /etc/environment
-    # GTK_IM_MODULE=fcitx
-    # QT_IM_MODULE=fcitx
-    # XMODIFIERS=@im=fcitx
-    # SDL_IM_MODULE=fcitx
     git clone https://gitee.com/cosss/adwm && cd adwm &> /dev/null
     cd dwm/ && make clean install &> /dev/null
     cd ../dmenu && make clean install &> /dev/null
     cd ../st && make clean install &> /dev/null
-    cd 
+    cd
+	mkdir -p .config/alacritty && cp /usr/share/doc/alacritty/example/alacritty.yml .config/alacritty/
+	sed -i "s/#font:/font:/g" .config/alacritty/alcritty.yml && sed -i "s/#size: 11\.0/size: 15\.0/g" .config/alacritty/alacritty.yml
+	mkdir -p .config/picom && cp /etc/xdg/picom.conf .config/picom/
 }
 installKde(){
     whiptail --title "Install Kde" --infobox "\n WAITTING PLEASE" 12 35
