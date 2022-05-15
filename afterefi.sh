@@ -43,15 +43,15 @@ installDWM(){
     pacman -S xorg xorg-xinit dolphin konsole firefox gwenview ntfs-3g ksystemlog ark kcalc kcolorchooser kate flameshot alacritty feh fcitx5-im fcitx5-rime fcitx5-chinese-addons fcitx5-material-color fcitx5-nord rofi picom rxvt-unicode krita archlinux-wallpaper --noconfirm 1> /dev/null 2> ./errorfile || funerror "pacmanerror" 2
     cp /etc/X11/xinit/xinitrc ../.xinitrc
     sed -i "/geometry/d" ../.xinitrc && sed -i "s/twm \&/\n\n\nfcitx5 \&\n\nfeh --bg-fill --randomize \/usr\/share\/backgrounds\/archlinux\/*\n\npicom \&\n\n\nexec dwm/g" ../.xinitrc
-    echo "GTK_IM_MODULE=fcitx
-    QT_IM_MODULE=fcitx
-    XMODIFIERS=@im=fcitx
-    SDL_IM_MODULE=fcitx" >> /etc/environment
     git clone https://gitee.com/cosss/adwm && cd adwm &> /dev/null
     cd dwm/ && make clean install &> /dev/null
     cd ../dmenu && make clean install &> /dev/null
     cd ../st && make clean install &> /dev/null
     cd
+	echo "GTK_IM_MODULE	DEFAULT=fcitx5
+QT_IM_MODULE	DEFAULT=fcitx5
+XMODIFIERS	DEFAULT=@im=fcitx5
+SDL_IM_MODULE	DEFAULT=fcitx5" >> .pam_environment
 	mkdir -p .config/alacritty && cp /usr/share/doc/alacritty/example/alacritty.yml .config/alacritty/
 	sed -i "s/#font:/font:/g" .config/alacritty/alcritty.yml && sed -i "s/#size: 11\.0/size: 13\.0/g" .config/alacritty/alacritty.yml
 	#mkdir -p .config/picom && cp /etc/xdg/picom.conf .config/picom/
