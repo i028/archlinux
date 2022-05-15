@@ -12,7 +12,7 @@ ADMIN_USER=$(whiptail --title "ADD USER" --nocancel --inputbox "User name:" 12 3
 ADMIN_USER_PASSWD=$(whiptail --title "ADD USER" --nocancel --inputbox "User password:" 12 35 3>&1 1>&2 2>&3)
 DESKTOP_ENV=$(whiptail --title "SELECT DESKTP" --menu "SELECT YOUR DESKTP" 15 35 6 1 NONE 2 XFCE 3 KDE 4 GNOME 5 DEEPIN 6 DWM 3>&1 1>&2 2>&3)
 
-#whiptail --title "ADD USER" --infobox "\n WAITTING PLEASE" 12 35
+whiptail --title "ADD USER" --infobox "\n WAITTING PLEASE" 12 35
 useradd --create-home ${ADMIN_USER}
 chpasswd <<EOF
 ${ADMIN_USER}:${ADMIN_USER_PASSWD}
@@ -43,7 +43,7 @@ installDWM(){
     pacman -S xorg xorg-xinit dolphin konsole firefox gwenview ntfs-3g ksystemlog ark kcalc kcolorchooser kate flameshot alacritty feh fcitx5-im fcitx5-rime fcitx5-chinese-addons fcitx5-material-color fcitx5-nord rofi picom rxvt-unicode krita archlinux-wallpaper --noconfirm 1> /dev/null 2> ./errorfile || funerror "pacmanerror" 2
     cp /etc/X11/xinit/xinitrc ../.xinitrc
     sed -i "/geometry/d" ../.xinitrc && sed -i "s/twm \&/\n\n\nfcitx5 \&\n\nfeh --bg-fill --randomize \/usr\/share\/backgrounds\/archlinux\/*\n\npicom \&\n\n\nexec dwm/g" ../.xinitrc
-    git clone https://gitee.com/cosss/adwm && cd adwm &> /dev/null
+    git clone https://gitee.com/cosss/adwm &> /dev/null && cd adwm
     cd dwm/ && make clean install &> /dev/null
     cd ../dmenu && make clean install &> /dev/null
     cd ../st && make clean install &> /dev/null
