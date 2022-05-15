@@ -48,10 +48,18 @@ installDWM(){
     cd ../dmenu && make clean install &> /dev/null
     cd ../st && make clean install &> /dev/null
     cd
-	echo "GTK_IM_MODULE	DEFAULT=fcitx5
-QT_IM_MODULE	DEFAULT=fcitx5
-XMODIFIERS	DEFAULT=@im=fcitx5
-SDL_IM_MODULE	DEFAULT=fcitx5" >> .pam_environment
+#		echo "GTK_IM_MODULE	DEFAULT=fcitx5
+#QT_IM_MODULE	DEFAULT=fcitx5
+#XMODIFIERS	DEFAULT=@im=fcitx5
+#INPUT_METHOD DEFAULT=fcitx5
+#SDL_IM_MODULE	DEFAULT=fcitx5" >> .pam_environment
+
+	echo "GTK_IM_MODULE=fcitx
+QT_IM_MODULE=fcitx
+XMODIFIERS=@im=fcitx
+INPUT_METHOD=fcitx
+SDL_IM_MODULE=fcitx
+GLFW_IM_MODULE=ibus" >> /etc/environment
 	mkdir -p .config/alacritty && cp /usr/share/doc/alacritty/example/alacritty.yml .config/alacritty/
 	sed -i "s/#font:/font:/g" .config/alacritty/alcritty.yml && sed -i "s/#size: 11\.0/size: 13\.0/g" .config/alacritty/alacritty.yml
 	#mkdir -p .config/picom && cp /etc/xdg/picom.conf .config/picom/
