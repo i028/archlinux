@@ -47,21 +47,21 @@ installDWM(){
     cd dwm/ && make clean install &> /dev/null
     cd ../dmenu && make clean install &> /dev/null
     cd ../st && make clean install &> /dev/null
-    cd
+    cd ../../
 #		echo "GTK_IM_MODULE	DEFAULT=fcitx5
 #QT_IM_MODULE	DEFAULT=fcitx5
 #XMODIFIERS	DEFAULT=@im=fcitx5
 #INPUT_METHOD DEFAULT=fcitx5
 #SDL_IM_MODULE	DEFAULT=fcitx5" >> .pam_environment
 
-	echo "GTK_IM_MODULE=fcitx
-QT_IM_MODULE=fcitx
-XMODIFIERS=@im=fcitx
-INPUT_METHOD=fcitx
-SDL_IM_MODULE=fcitx
-GLFW_IM_MODULE=ibus" >> /etc/environment
-	mkdir -p .config/alacritty && cp /usr/share/doc/alacritty/example/alacritty.yml .config/alacritty/
-	sed -i "s/#font:/font:/g" .config/alacritty/alcritty.yml && sed -i "s/#size: 11\.0/size: 13\.0/g" .config/alacritty/alacritty.yml
+#	echo "GTK_IM_MODULE=fcitx
+#QT_IM_MODULE=fcitx
+#XMODIFIERS=@im=fcitx
+#INPUT_METHOD=fcitx
+#SDL_IM_MODULE=fcitx
+#GLFW_IM_MODULE=ibus" >> .pam_environment 
+#	mkdir -p .config/alacritty && cp /usr/share/doc/alacritty/example/alacritty.yml .config/alacritty/
+#	sed -i "s/#font:/font:/g" .config/alacritty/alcritty.yml && sed -i "s/#size: 11\.0/size: 13\.0/g" .config/alacritty/alacritty.yml
 	#mkdir -p .config/picom && cp /etc/xdg/picom.conf .config/picom/
 }
 installKde(){
@@ -142,4 +142,4 @@ pacman -Scc --noconfirm 1> /dev/null 2> ./errorfile || funerror "Empty Cache" 2
 cp -r ./install ../home/${ADMIN_USER}/
 # rm -rf ../install
 
-whiptail --title "SUCCESSFUL" --yesno "SUCCESSFUL!!!\n\nScript form {MurphyWZhu/archlinux}\nThanks!\n\nReboot now?" 15 40 && reboot || exit 0
+whiptail --title "SUCCESSFUL" --yesno "SUCCESSFUL!!!\n\nScript from {MurphyWZhu/archlinux}\nThanks!\n\nReboot now?" 15 40 && reboot || exit 0
