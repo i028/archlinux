@@ -16,8 +16,6 @@ ROOT_PASSWD=$(whiptail --title "ROOT PASSWD" --nocancel --inputbox "Root passwor
 DISK_NUM=$(whiptail --title "SELECT YOUR DISK" --menu "Select a Disk" 12 35 5 $(lsblk | grep disk | awk '{print(FNR,$1)}' | xargs) 3>&1 1>&2 2>&3)
 DISK=$(lsblk | grep disk | awk '{print($1)}' | sed -n ${DISK_NUM}p)
 
-clear
-
 #whiptail --title "REFLECTOR" --infobox "\n\n Wait a moment." 15 40
 #reflector --country China --age 24 --sort rate --protocol https --save /etc/pacman.d/mirrorlist
 
@@ -28,10 +26,12 @@ Server = https://mirrors.bfsu.edu.cn/archlinux/\$repo/os/\$arch
 Server = https://mirror.bjtu.edu.cn/disk3/archlinux/\$repo/os/\$arch" >> /etc/pacman.d/mirrorlist
 pacman -Syy
 
-parted -s /dev/${DISK} mklabel gpt 2> ./errorfile && parted -s /dev/${DISK} mkpart ESP fat32 2048s 2099199s && parted -s /dev/${DISK} set 1 boot on && parted -s /dev/${DISK} mkpart primary ext4 2099200s 100%
-mkfs.fat -F32 /dev/${DISK}1
-mkfs.ext4 /dev/${DISK}2
+parted -s /dev/${DISK} mklabel gpt 2> ./errorfile && parted -s /dev/${DISK} mkpart ESP fat32 2048s 2099199s 2> ./errorfile && parted -s /dev/${DISK} set 1 boot on 2> ./errorfile && parted -s /dev/${DISK} mkpart primary ext4 2099200s 100% 2> ./errorfile || funerror "partederror" 3
+mkfs.fat -F32 /dev/${DISK}1 1> /dev/null 2> ./errorfile || funerror "mkfserror" 4
+mkfs.ext4 /dev/${DISK}2 1> /dev/null 2> ./errorfile || funerror "mkfserror" 4
 mount /dev/${DISK}2 /mnt && mkdir -p /mnt/boot/efi && mount /dev/${DISK}1 /mnt/boot/efi
+
+clear
 
 timedatectl set-ntp true
 
