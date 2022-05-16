@@ -35,7 +35,7 @@ mount /dev/${DISK}2 /mnt && mkdir -p /mnt/boot/efi && mount /dev/${DISK}1 /mnt/b
 
 timedatectl set-ntp true
 
-pacstrap /mnt base base-devel linux linux-firmware linux-headers bash-completion networkmanager vim nano git --noconfirm 
+pacstrap /mnt base base-devel linux linux-firmware linux-headers bash-completion networkmanager vim nano git --noconfirm
 genfstab -U /mnt >> /mnt/etc/fstab  --noconfirm
 
 arch-chroot /mnt ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
