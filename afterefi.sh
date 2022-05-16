@@ -10,7 +10,7 @@ setfont /usr/share/kbd/consolefonts/iso01-12x22.psfu.gz
 
 ADMIN_USER=$(whiptail --title "ADD USER" --nocancel --inputbox "User name:" 12 35 3>&1 1>&2 2>&3)
 ADMIN_USER_PASSWD=$(whiptail --title "ADD USER" --nocancel --inputbox "User password:" 12 35 3>&1 1>&2 2>&3)
-DESKTOP_ENV=$(whiptail --title "SELECT DESKTP" --menu "SELECT YOUR DESKTP" 15 35 6 1 NONE 2 XFCE 3 KDE 4 GNOME 5 DEEPIN 6 DWM 3>&1 1>&2 2>&3)
+DESKTOP_ENV=$(whiptail --title "SELECT DESKTP" --menu "SELECT YOUR DESKTP" 15 35 6 1 NONE 2 DWM 3 KDE 4 GNOME 5 DEEPIN 3>&1 1>&2 2>&3)
 
 useradd --create-home ${ADMIN_USER}
 chpasswd <<EOF
@@ -32,10 +32,11 @@ sed -i "s/#export/export/g" /mnt/etc/profile.d/freetype2.sh
 
 pacman -S ttf-dejavu ttf-droid noto-fonts noto-fonts-extra noto-fonts-emoji noto-fonts-cjk adobe-source-code-pro-fonts wqy-zenhei wqy-microhei alsa-utils pulseaudio pulseaudio-bluetooth cups --noconfirm
 
-pacman -S  xorg xorg-xinit --noconfirm
+pacman -S xorg xorg-xinit --noconfirm
 
 installDWM(){
-    pacman -S dolphin konsole vscodium firefox gwenview ntfs-3g ksystemlog ark kcalc kcolorchooser kate flameshot alacritty feh fcitx5-im fcitx5-rime fcitx5-chinese-addons fcitx5-material-color fcitx5-nord rofi picom rxvt-unicode krita archlinux-wallpaper
+	whiptail --title "Install DWM" --infobox "\n WAITTING PLEASE" 12 35
+    pacman -S xorg xorg-xinit dolphin konsole firefox gwenview ntfs-3g ksystemlog ark kcalc kcolorchooser kate flameshot alacritty feh fcitx5-im fcitx5-rime fcitx5-chinese-addons fcitx5-material-color fcitx5-nord rofi picom rxvt-unicode krita archlinux-wallpaper --noconfirm 1> /dev/null 2> ./errorfile || funerror "pacmanerror" 2
 	echo "GTK_IM_MODULE=fcitx
 QT_IM_MODULE=fcitx
 XMODIFIERS=@im=fcitx
@@ -91,15 +92,13 @@ then
     pacman -S xorg --noconfirm
 
     case ${DESKTOP_ENV} in
-        "2") installXfce
+        "2") installDWM
         ;;
         "3") installKde
         ;;
         "4") installGnome
         ;;
         "5") installDeepin
-        ;;
-        "6") installDWM
         ;;
     esac
 fi
