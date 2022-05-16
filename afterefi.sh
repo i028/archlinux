@@ -30,7 +30,7 @@ locale-gen
 sed -i "s/alias/export EDITOR=vim\nalias grep=\'grep --color=auto\'\nalias egrep=\'egrep --color=auto\'\nalias fgrep=\'fgrep --color=auto\'\nalias/g" /etc/skel/.bashrc
 cp -r /etc/skel/. ~/
 
-sed -i "s/#export/export/g" /mnt/etc/profile.d/freetype2.sh
+sed -i "s/#export/export/g" /etc/profile.d/freetype2.sh
 
 pacman -S ttf-dejavu ttf-droid noto-fonts noto-fonts-extra noto-fonts-emoji noto-fonts-cjk adobe-source-code-pro-fonts wqy-zenhei wqy-microhei alsa-utils pulseaudio pulseaudio-bluetooth cups --noconfirm
 
