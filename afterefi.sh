@@ -30,17 +30,19 @@ cp -r /etc/skel/. .
 
 pacman -S ttf-dejavu ttf-droid noto-fonts noto-fonts-extra noto-fonts-emoji noto-fonts-cjk adobe-source-code-pro-fonts wqy-zenhei wqy-microhei alsa-utils pulseaudio pulseaudio-bluetooth cups --noconfirm
 
+pacman -S  xorg xorg-xinit --noconfirm
+
 sed -i "s/#export/export/g" /mnt/etc/profile.d/freetype2.sh
 
 installDWM(){
-    pacman -S xorg xorg-xinit dolphin konsole vscodium firefox gwenview ntfs-3g ksystemlog ark kcalc kcolorchooser kate flameshot alacritty feh fcitx5-im fcitx5-rime fcitx5-chinese-addons fcitx5-material-color fcitx5-nord rofi picom rxvt-unicode krita archlinux-wallpaper
+    pacman -S dolphin konsole vscodium firefox gwenview ntfs-3g ksystemlog ark kcalc kcolorchooser kate flameshot alacritty feh fcitx5-im fcitx5-rime fcitx5-chinese-addons fcitx5-material-color fcitx5-nord rofi picom rxvt-unicode krita archlinux-wallpaper
 	echo "GTK_IM_MODULE=fcitx
 QT_IM_MODULE=fcitx
 XMODIFIERS=@im=fcitx
 INPUT_METHOD=fcitx
 SDL_IM_MODULE=fcitx" >> ~/.pam_environment
-    cp /etc/X11/xinit/xinitrc ../.xinitrc
-    sed -i "/geometry/d" ../.xinitrc && sed -i "s/twm \&/\n\nfeh --bg-fill --randomize \/usr\/share\/backgrounds\/archlinux\/*\n\npicom \&\n\n\nexec dwm/g" ../.xinitrc
+    cp /etc/X11/xinit/xinitrc ~/.xinitrc
+    sed -i "/geometry/d" ~/.xinitrc && sed -i "s/twm \&/\n\nfeh --bg-fill --randomize \/usr\/share\/backgrounds\/archlinux\/*\n\npicom \&\n\n\nexec dwm/g" ~/.xinitrc
     git clone https://gitee.com/cosss/adwm && cd adwm
     cd dwm/ && make clean install && cd ../dmenu && make clean install && cd ../st && make clean install
     cd 
