@@ -24,14 +24,15 @@ echo "Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/\$repo/os/\$arch
 Server = https://mirrors.ustc.edu.cn/archlinux/\$repo/os/\$arch
 Server = https://mirrors.bfsu.edu.cn/archlinux/\$repo/os/\$arch
 Server = https://mirror.bjtu.edu.cn/disk3/archlinux/\$repo/os/\$arch" >> /etc/pacman.d/mirrorlist
+
+clear
+
 pacman -Syy
 
 parted -s /dev/${DISK} mklabel gpt 2> ./errorfile && parted -s /dev/${DISK} mkpart ESP fat32 2048s 2099199s 2> ./errorfile && parted -s /dev/${DISK} set 1 boot on 2> ./errorfile && parted -s /dev/${DISK} mkpart primary ext4 2099200s 100% 2> ./errorfile || funerror "partederror" 3
 mkfs.fat -F32 /dev/${DISK}1 1> /dev/null 2> ./errorfile || funerror "mkfserror" 4
 mkfs.ext4 /dev/${DISK}2 1> /dev/null 2> ./errorfile || funerror "mkfserror" 4
 mount /dev/${DISK}2 /mnt && mkdir -p /mnt/boot/efi && mount /dev/${DISK}1 /mnt/boot/efi
-
-clear
 
 timedatectl set-ntp true
 
