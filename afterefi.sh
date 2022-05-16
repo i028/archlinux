@@ -36,7 +36,7 @@ pacman -S xorg xorg-xinit --noconfirm
 
 installDWM(){
 	whiptail --title "Install DWM" --infobox "\n WAITTING PLEASE" 12 35
-    pacman -S xorg xorg-xinit dolphin konsole firefox gwenview ntfs-3g ksystemlog ark kcalc kcolorchooser kate flameshot alacritty feh fcitx5-im fcitx5-rime fcitx5-chinese-addons fcitx5-material-color fcitx5-nord rofi picom rxvt-unicode krita archlinux-wallpaper --noconfirm 1> /dev/null 2> ./errorfile || funerror "pacmanerror" 2
+    pacman -S xorg xorg-xinit dolphin konsole firefox gwenview ntfs-3g ksystemlog ark kcalc kcolorchooser kate flameshot alacritty feh fcitx5-im fcitx5-rime fcitx5-chinese-addons fcitx5-material-color fcitx5-nord rofi picom rxvt-unicode krita archlinux-wallpaper --noconfirm 1> ./errorfile || funerror "pacmanerror" 2
 	echo "GTK_IM_MODULE=fcitx
 QT_IM_MODULE=fcitx
 XMODIFIERS=@im=fcitx
@@ -89,7 +89,6 @@ then
     then
         pacman -S nvidia-prime --noconfirm
     fi
-    pacman -S xorg --noconfirm
 
     case ${DESKTOP_ENV} in
         "2") installDWM
