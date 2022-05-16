@@ -1,4 +1,4 @@
-#! /bin/bash
+#! /bin/bashclear
 
 funerror(){
     whiptail --title $1 --textbox errorfile 20 60
@@ -32,17 +32,20 @@ cp -r /etc/skel/. ~/
 
 sed -i "s/#export/export/g" /etc/profile.d/freetype2.sh
 
+echo "========  Font  ========"
 pacman -S ttf-dejavu ttf-droid noto-fonts noto-fonts-extra noto-fonts-emoji noto-fonts-cjk adobe-source-code-pro-fonts wqy-zenhei wqy-microhei alsa-utils pulseaudio pulseaudio-bluetooth cups --noconfirm
 
+echo "========  Xorg  ========"
 pacman -S xorg xorg-xinit --noconfirm
 
 installDWM(){
-    pacman -S dolphin konsole firefox gwenview ntfs-3g ksystemlog ark kcalc kcolorchooser kate flameshot alacritty feh rofi picom rxvt-unicode krita archlinux-wallpaper fcitx5-im fcitx5-chinese-addons fcitx5-rime fcitx5-material-color fcitx5-nord --noconfirm 1> ./errorfile || funerror "pacmanerror" 2
-	echo "GTK_IM_MODULE=fcitx
-QT_IM_MODULE=fcitx
-XMODIFIERS=@im=fcitx
-INPUT_METHOD=fcitx
-SDL_IM_MODULE=fcitx" >> ~/.pam_environment
+	echo "========  App && Fcitx5  ========"
+    pacman -S vscodium dolphin konsole firefox gwenview ntfs-3g ksystemlog ark kcalc kcolorchooser kate flameshot alacritty feh rofi picom rxvt-unicode krita archlinux-wallpaper fcitx5-im fcitx5-chinese-addons fcitx5-rime fcitx5-material-color fcitx5-nord --noconfirm 1> ./errorfile || funerror "pacmanerror" 2
+	echo "GTK_IM_MODULE	DEFAULT=fcitx5
+QT_IM_MODULE	DEFAULT=fcitx5
+XMODIFIERS	DEFAULT=@im=fcitx5
+INPUT_METHOD	DEFAULT=fcitx5
+SDL_IM_MODULE	DEFAULT=fcitx5" >> ~/.pam_environment
     cp /etc/X11/xinit/xinitrc ~/.xinitrc
     sed -i "/geometry/d" ~/.xinitrc && sed -i "s/twm \&/\n\nfeh --bg-fill --randomize \/usr\/share\/backgrounds\/archlinux\/*\n\npicom \&\n\n\nexec dwm/g" ~/.xinitrc
     git clone https://gitee.com/cosss/adwm && cd adwm
@@ -50,6 +53,11 @@ SDL_IM_MODULE=fcitx" >> ~/.pam_environment
 	cd ../dmenu && make clean install
 	cd ../st && make clean install
     cd ~
+	mkdir -p ~/.config/alacritty && cp /usr/share/doc/alacritty/example/alacritty.yml ~/.config/alacritty/
+	sed -i "s/#font:/font:/g" ~/.config/alacritty/alcritty.yml && sed -i "s/#size: 11\.0/size: 14\.0/g" ~/.config/alacritty/alacritty.yml
+	mkdir -p ~/.config/picom && cp /etc/xdg/picom.conf ~/.config/picom/
+	sed -i "s/shadow = true/shadow = false/g" ~/.config/picom/picom.conf
+	sed -i "s/# opacity-rule = \[\]/opacity-rule = \[\"90:class_g = \'dwm\'\",\"90:class_g = \'Alacritty\'\",\"90:class_g = \'st-256colors\'\",\]/g"
 }
 installKde(){
     pacman -S plasma dolphin konsole kdeconnect firefox chromium gwenview ntfs-3g ksystemlog ark kget kcalc kcolorchooser spectacle kate flameshot --noconfirm
