@@ -5,12 +5,14 @@ funerror(){
     exit $2
 }
 
-setfont /usr/share/kbd/consolefonts/iso01-12x22.psfu.gz
+#setfont /usr/share/kbd/consolefonts/iso01-12x22.psfu.gz
 #ping -c 4 www.baidu.com 1> /dev/null 2> ./errorfile || funerror "NetworkError!" 1
 
 ADMIN_USER=$(whiptail --title "ADD USER" --nocancel --inputbox "User name:" 12 35 3>&1 1>&2 2>&3)
 ADMIN_USER_PASSWD=$(whiptail --title "ADD USER" --nocancel --inputbox "User password:" 12 35 3>&1 1>&2 2>&3)
 DESKTOP_ENV=$(whiptail --title "SELECT DESKTP" --menu "SELECT YOUR DESKTP" 15 35 6 1 NONE 2 XFCE 3 KDE 4 GNOME 5 DEEPIN 6 DWM 3>&1 1>&2 2>&3)
+
+clear
 
 useradd --create-home ${ADMIN_USER}
 chpasswd <<EOF
@@ -28,7 +30,6 @@ locale-gen
 sed -i "s/alias/export EDITOR=vim\nalias grep=\'grep --color=auto\'\nalias egrep=\'egrep --color=auto\'\nalias fgrep=\'fgrep --color=auto\'\nalias/g" /etc/skel/.bashrc
 cp -r /etc/skel/. .
 
-whiptail --title "Install Fonts" --infobox "\n WAITTING PLEASE" 12 35
 pacman -S ttf-dejavu ttf-droid noto-fonts noto-fonts-extra noto-fonts-emoji noto-fonts-cjk adobe-source-code-pro-fonts wqy-zenhei wqy-microhei  --noconfirm
 
 sed -i "s/#export/export/g" /mnt/etc/profile.d/freetype2.sh
@@ -87,8 +88,7 @@ then
     then
         pacman -S nvidia-prime --noconfirm
     fi
-    whiptail --title "Install XORG" --infobox "\n WAITTING PLEASE" 12 35
-    pacman -S xorg --noconfirm
+    pacman -S xorg xorg-xinit --noconfirm
 
     case ${DESKTOP_ENV} in
         "2") installXfce
@@ -125,6 +125,5 @@ QT_IM_MODULE=fcitx
 XMODIFIERS=@im=fcitx
 INPUT_METHOD=fcitx
 SDL_IM_MODULE=fcitx" >> .pam_environment
-
 
 whiptail --title "SUCCESSFUL" --yesno "SUCCESSFUL!!!\n\nScript from {MurphyWZhu/archlinux}\nThanks!\n\nReboot now?" 15 40 && reboot || exit 0

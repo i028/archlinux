@@ -5,16 +5,18 @@ funerror(){
     exit $2
 }
 
-setfont /usr/share/kbd/consolefonts/iso01-12x22.psfu.gz
+#setfont /usr/share/kbd/consolefonts/iso01-12x22.psfu.gz
 whiptail --title "FBI WARNING" --yesno "FIRST YOU SHOULD PARTITION THE DISK." 12 35 || exit 0
 
 whiptail --title "SET HOSTNAME" --infobox "\n WATTING PLEASE" 12 35
 HOST_NAME=$(whiptail --title "HOST NAME" --nocancel  --inputbox "Hostname:" 12 35 3>&1 1>&2 2>&3)
+whiptail --title "SET ROOT PASSWD" --infobox "\n WATTING PLEASE" 12 35
 ROOT_PASSWD=$(whiptail --title "ROOT PASSWD" --nocancel --inputbox "Root password:" 12 35 3>&1 1>&2 2>&3)
 
 DISK_NUM=$(whiptail --title "SELECT YOUR DISK" --menu "Select a Disk" 12 35 5 $(lsblk | grep disk | awk '{print(FNR,$1)}' | xargs) 3>&1 1>&2 2>&3)
 DISK=$(lsblk | grep disk | awk '{print($1)}' | sed -n ${DISK_NUM}p)
 
+clear
 systemctl stop reflector.service
 #whiptail --title "REFLECTOR" --infobox "\n\n Wait a moment." 15 40
 #reflector --country China --age 24 --sort rate --protocol https --save /etc/pacman.d/mirrorlist
