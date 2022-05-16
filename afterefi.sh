@@ -5,7 +5,7 @@ funerror(){
     exit $2
 }
 
-setfont /usr/share/kbd/consolefonts/iso01-12x22.psfu.gz
+#setfont /usr/share/kbd/consolefonts/iso01-12x22.psfu.gz
 #ping -c 4 www.baidu.com 1> /dev/null 2> ./errorfile || funerror "NetworkError!" 1
 
 ADMIN_USER=$(whiptail --title "ADD USER" --nocancel --inputbox "User name:" 12 35 3>&1 1>&2 2>&3)
@@ -36,8 +36,10 @@ pacman -S ttf-dejavu ttf-droid noto-fonts noto-fonts-extra noto-fonts-emoji noto
 
 pacman -S xorg xorg-xinit --noconfirm
 
+pacman -S fcitx5-im fcitx5-chinese-addons fcitx5-rime fcitx5-material-color fcitx5-nord --noconfirm
+
 installDWM(){
-    pacman -S dolphin konsole firefox gwenview ntfs-3g ksystemlog ark kcalc kcolorchooser kate flameshot alacritty feh rofi picom rxvt-unicode krita archlinux-wallpaper fcitx5-im fcitx5-chinese-addons fcitx5-rime fcitx5-material-color fcitx5-nord --noconfirm 1> ./errorfile || funerror "pacmanerror" 2
+    pacman -S dolphin konsole firefox gwenview ntfs-3g ksystemlog ark kcalc kcolorchooser kate flameshot alacritty feh rofi picom rxvt-unicode krita archlinux-wallpaper --noconfirm 1> ./errorfile || funerror "pacmanerror" 2
 	echo "GTK_IM_MODULE=fcitx
 QT_IM_MODULE=fcitx
 XMODIFIERS=@im=fcitx
