@@ -4,7 +4,7 @@ funerror(){
     whiptail --title $1 --textbox errorfile 20 60
     exit $2
 }
-
+systemctl stop reflector.service
 #setfont /usr/share/kbd/consolefonts/iso01-12x22.psfu.gz
 #whiptail --title "FBI WARNING" --yesno "FIRST YOU SHOULD PARTITION THE DISK." 12 35 || exit 0
 
@@ -17,7 +17,7 @@ DISK_NUM=$(whiptail --title "SELECT YOUR DISK" --menu "Select a Disk" 12 35 5 $(
 DISK=$(lsblk | grep disk | awk '{print($1)}' | sed -n ${DISK_NUM}p)
 
 clear
-systemctl stop reflector.service
+
 #whiptail --title "REFLECTOR" --infobox "\n\n Wait a moment." 15 40
 #reflector --country China --age 24 --sort rate --protocol https --save /etc/pacman.d/mirrorlist
 
