@@ -12,7 +12,6 @@ ADMIN_USER=$(whiptail --title "ADD USER" --nocancel --inputbox "User name:" 12 3
 ADMIN_USER_PASSWD=$(whiptail --title "ADD USER" --nocancel --inputbox "User password:" 12 35 3>&1 1>&2 2>&3)
 DESKTOP_ENV=$(whiptail --title "SELECT DESKTP" --menu "SELECT YOUR DESKTP" 15 35 6 1 NONE 2 XFCE 3 KDE 4 GNOME 5 DEEPIN 6 DWM 3>&1 1>&2 2>&3)
 
-whiptail --title "ADD USER" --infobox "\n WAITTING PLEASE" 12 35
 useradd --create-home ${ADMIN_USER}
 chpasswd <<EOF
 ${ADMIN_USER}:${ADMIN_USER_PASSWD}
@@ -23,82 +22,73 @@ sed -i "s/# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/g" /etc/sudoers
 echo "en_US.UTF-8 UTF-8
 zh_CN.UTF-8 UTF-8" >> /etc/locale.gen
 echo 'LANG=en_US.UTF-8' >> /etc/locale.conf
-locale-gen &> /dev/null
+locale-gen
 
 # bash
 sed -i "s/alias/export EDITOR=vim\nalias grep=\'grep --color=auto\'\nalias egrep=\'egrep --color=auto\'\nalias fgrep=\'fgrep --color=auto\'\nalias/g" /etc/skel/.bashrc
 cp -r /etc/skel/. .
 
 whiptail --title "Install Fonts" --infobox "\n WAITTING PLEASE" 12 35
-pacman -S ttf-dejavu ttf-droid noto-fonts noto-fonts-extra noto-fonts-emoji noto-fonts-cjk adobe-source-code-pro-fonts wqy-zenhei wqy-microhei  --noconfirm 1> /dev/null 2> ./errorfile || funerror "pacmanerror" 2
+pacman -S ttf-dejavu ttf-droid noto-fonts noto-fonts-extra noto-fonts-emoji noto-fonts-cjk adobe-source-code-pro-fonts wqy-zenhei wqy-microhei  --noconfirm
 
-whiptail --title "FreeType2" --infobox "\n Wait a moment, please." 12 35
 sed -i "s/#export/export/g" /mnt/etc/profile.d/freetype2.sh
 
-whiptail --title "Install Sound&Print Driver" --infobox "\n Waitting Please" 12 35
-pacman -S alsa-utils pulseaudio pulseaudio-bluetooth cups --noconfirm 1> /dev/null 2> ./errorfile || funerror "InstallSound&PrintDriver" 2
+pacman -S alsa-utils pulseaudio pulseaudio-bluetooth cups --noconfirm
 
 installDWM(){
-    whiptail --title "Install DWM" --infobox "\n WAITTING PLEASE" 12 35
-    pacman -S xorg xorg-xinit dolphin konsole vscodium firefox gwenview ntfs-3g ksystemlog ark kcalc kcolorchooser kate flameshot alacritty feh fcitx5-im fcitx5-rime fcitx5-chinese-addons fcitx5-material-color fcitx5-nord rofi picom rxvt-unicode krita archlinux-wallpaper --noconfirm 1> /dev/null 2> ./errorfile || funerror "pacmanerror" 2
-    cp /etc/X11/xinit/xinitrc ../.xinitrc
+    pacman -S xorg xorg-xinit dolphin konsole vscodium firefox gwenview ntfs-3g ksystemlog ark kcalc kcolorchooser kate flameshot alacritty feh fcitx5-im fcitx5-rime fcitx5-chinese-addons fcitx5-material-color fcitx5-nord rofi picom rxvt-unicode krita archlinux-wallpaper --noconfirm 
+		cp /etc/X11/xinit/xinitrc ../.xinitrc
     sed -i "/geometry/d" ../.xinitrc && sed -i "s/twm \&/\n\nfeh --bg-fill --randomize \/usr\/share\/backgrounds\/archlinux\/*\n\npicom \&\n\n\nexec dwm/g" ../.xinitrc
-    git clone https://gitee.com/cosss/adwm &> /dev/null && cd adwm
-    cd dwm/ && make clean install &> /dev/null
-    cd ../dmenu && make clean install &> /dev/null
-    cd ../st && make clean install &> /dev/null
+    git clone https://gitee.com/cosss/adwm && cd adwm
+    cd dwm/ && make clean install
+    cd ../dmenu && make clean install 
+    cd ../st && make clean install
     cd ../../
 #	mkdir -p .config/alacritty && cp /usr/share/doc/alacritty/example/alacritty.yml .config/alacritty/
 #	sed -i "s/#font:/font:/g" .config/alacritty/alcritty.yml && sed -i "s/#size: 11\.0/size: 13\.0/g" .config/alacritty/alacritty.yml
 	#mkdir -p .config/picom && cp /etc/xdg/picom.conf .config/picom/
 }
 installKde(){
-    whiptail --title "Install Kde" --infobox "\n WAITTING PLEASE" 12 35
-    pacman -S plasma dolphin konsole kdeconnect firefox chromium gwenview ntfs-3g ksystemlog ark kget kcalc kcolorchooser spectacle kate flameshot --noconfirm 1> /dev/null 2> ./errorfile || funerror "pacmanerror" 2
-    systemctl enable sddm &> /dev/null
+    pacman -S plasma dolphin konsole kdeconnect firefox chromium gwenview ntfs-3g ksystemlog ark kget kcalc kcolorchooser spectacle kate flameshot --noconfirm 
+    systemctl enable sddm 
 }
 installXfce(){
-    whiptail --title "Install Xfce" --infobox "\n WAITTING PLEASE" 12 35
-    pacman -S xfce4 xfce4-goodies lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings network-manager-applet pavucontrol pulseaudio --noconfirm 1> /dev/null 2> ./errorfile || funerror "pacmanerror" 2
-    systemctl enable lightdm &> /dev/null
+    pacman -S xfce4 xfce4-goodies lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings network-manager-applet pavucontrol pulseaudio --noconfirm 
+    systemctl enable lightdm
 }
 installGnome(){
-    whiptail --title "Install Gnome" --infobox "\n WAITTING PLEASE" 12 35
-    pacman -S gnome --noconfirm 1> /dev/null 2> ./errorfile || funerror "pacmanerror" 2
-    systemctl enable gdm &> /dev/null
-    echo 'LANG=en_US.UTF-8' >> /etc/locale.conf && locale-gen &> /dev/null
+    pacman -S gnome --noconfirm
+    systemctl enable gdm
+    echo 'LANG=en_US.UTF-8' >> /etc/locale.conf && locale-gen
 }
 installDeepin(){
-    whiptail --title "Install Deepin" --infobox "\n WAITTING PLEASE" 12 35
-    pacman -S deepin deepin-extra --noconfirm 1> /dev/null 2> ./errorfile || funerror "pacmanerror" 2
-    systemctl enable lightdm &> /dev/null
+    pacman -S deepin deepin-extra --noconfirm
+    systemctl enable lightdm
     sed -i "s/#greeter-session=example-gtk-gnome/greeter-session=lightdm-deepin-greeter/g" /etc/lightdm/lightdm.conf
 }
 
-whiptail --title "INSTALL DESKTOP" --infobox "\n WAITTING PLEASE" 12 35
 if [ ${DESKTOP_ENV} != "1" ]
 then
-    whiptail --title "Install GPU DRIVE" --infobox "\n WAITTING PLEASE" 12 35
     NVIDIA=0
     INTEL=0
     tmp1=$(lspci | grep -i vga | grep -i nvidia >> /dev/null)
     if [ $? -eq 0 ]
     then
         NVIDIA=1
-        pacman -S nvidia --noconfirm 1> /dev/null 2> ./errorfile || funerror "pacmanerror" 2
+        pacman -S nvidia --noconfirm
     fi
     tmp1=$(lspci | grep -i vga | grep -i intel >> /dev/null)
     if [ $? -eq 0 ]
     then
         INTEL=1
-        pacman -S mesa vulkan-intel libva-intel-driver intel-media-driver --noconfirm 1> /dev/null 2> ./errorfile || funerror "pacmanerror" 2
+        pacman -S mesa vulkan-intel libva-intel-driver intel-media-driver --noconfirm
     fi
     if [ ${NVIDIA} -eq 1 -a ${INTEL} -eq 1 ]
     then
-        pacman -S nvidia-prime --noconfirm 1> /dev/null 2> ./errorfile || funerror "pacmanerror" 2
+        pacman -S nvidia-prime --noconfirm
     fi
     whiptail --title "Install XORG" --infobox "\n WAITTING PLEASE" 12 35
-    pacman -S xorg --noconfirm 1> /dev/null 2> ./errorfile || funerror "pacmanerror" 2
+    pacman -S xorg --noconfirm
 
     case ${DESKTOP_ENV} in
         "2") installXfce
@@ -114,19 +104,18 @@ then
     esac
 fi
 
-whiptail --title "ARCHLINUXCN" --infobox "\n WAITTING PLEASE" 12 35
-pacman -S haveged --noconfirm 1> /dev/null 2> ./errorfile || funerror "pacmanerror" 2
-systemctl enable haveged &> /dev/null
-rm -rf /etc/pacman.d/gnupg &> /dev/null
-pacman-key --init &> /dev/null
-pacman-key --populate archlinux &> /dev/null
+pacman -S haveged --noconfirm
+systemctl enable haveged
+rm -rf /etc/pacman.d/gnupg
+pacman-key --init
+pacman-key --populate archlinux
 echo "[archlinuxcn]
 Server = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/\$arch" >> /etc/pacman.conf
-pacman -Syu &> /dev/null
-pacman -S archlinuxcn-keyring --noconfirm 1> /dev/null 2> ./errorfile || funerror "pacmanerror" 2
+pacman -Syu
+pacman -S archlinuxcn-keyring --noconfirm
 
 whiptail --title "Empty Cache" --infobox "wait a minutes" 12 35
-pacman -Scc --noconfirm 1> /dev/null 2> ./errorfile || funerror "Empty Cache" 2
+pacman -Scc --noconfirm
 cp -r ./install ../home/${ADMIN_USER}/
 # rm -rf ../install
 

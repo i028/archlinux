@@ -19,43 +19,36 @@ systemctl stop reflector.service
 #whiptail --title "REFLECTOR" --infobox "\n\n Wait a moment." 15 40
 #reflector --country China --age 24 --sort rate --protocol https --save /etc/pacman.d/mirrorlist
 
-whiptail --title "Edit Mirrors" --infobox "\n Waitting Please" 12 35
 mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlistbak
 echo "Server = https://mirrors.tuna.tsinghua.edu.cn/archlinux/\$repo/os/\$arch
 Server = https://mirrors.ustc.edu.cn/archlinux/\$repo/os/\$arch
 Server = https://mirrors.bfsu.edu.cn/archlinux/\$repo/os/\$arch
 Server = https://mirror.bjtu.edu.cn/disk3/archlinux/\$repo/os/\$arch" >> /etc/pacman.d/mirrorlist
-pacman -Syy --noconfirm 1> /dev/null 2> ./errorfile || funerror "UPDATE" 2
+pacman -Syy
 
-whiptail --title "DISK" --infobox "\n DISK PARTITION." 12 35
-parted -s /dev/${DISK} mklabel gpt 2> ./errorfile && parted -s /dev/${DISK} mkpart ESP fat32 2048s 2099199s 2> ./errorfile && parted -s /dev/${DISK} set 1 boot on 2> ./errorfile && parted -s /dev/${DISK} mkpart primary ext4 2099200s 100% 2> ./errorfile || funerror "partederror" 3
-mkfs.fat -F32 /dev/${DISK}1 1> /dev/null 2> ./errorfile || funerror "mkfserror" 4
-mkfs.ext4 /dev/${DISK}2 1> /dev/null 2> ./errorfile || funerror "mkfserror" 4
+parted -s /dev/${DISK} mklabel gpt 2> ./errorfile && parted -s /dev/${DISK} mkpart ESP fat32 2048s 2099199s && parted -s /dev/${DISK} set 1 boot on && parted -s /dev/${DISK} mkpart primary ext4 2099200s 100%
+mkfs.fat -F32 /dev/${DISK}1
+mkfs.ext4 /dev/${DISK}2
 mount /dev/${DISK}2 /mnt && mkdir -p /mnt/boot/efi && mount /dev/${DISK}1 /mnt/boot/efi
 
 timedatectl set-ntp true
 
-whiptail --title "Install System" --infobox "\n Waitting Please" 12 35
-pacstrap /mnt base base-devel linux linux-firmware linux-headers bash-completion networkmanager vim nano git --noconfirm 1> /dev/null 2> ./errorfile || funerror "InstallSystem1" 2
-genfstab -U /mnt >> /mnt/etc/fstab  --noconfirm 1> /dev/null 2> ./errorfile || funerror "InstallSystem2" 2
+pacstrap /mnt base base-devel linux linux-firmware linux-headers bash-completion networkmanager vim nano git --noconfirm 
+genfstab -U /mnt >> /mnt/etc/fstab  --noconfirm
 
-whiptail --title "Env Set" --infobox "\n Waitting Please" 12 35
 arch-chroot /mnt ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 arch-chroot /mnt hwclock --systohc
-arch-chroot /mnt systemctl enable NetworkManager &> /dev/null
+arch-chroot /mnt systemctl enable NetworkManager
 
-whiptail --title "Install GURB" --infobox "Installing and Configuring GRUB, please wait" 12 35
-arch-chroot /mnt pacman -S grub efibootmgr --noconfirm 1> /dev/null 2> ./errorfile || funerror "pacmanerror" 2
-arch-chroot /mnt grub-install --efi-directory=/boot/efi 1> /dev/null 2> ./errorfile || funerror "grub-installerror" 8
-arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg 1> /dev/null 2> ./errorfile || funerror "grub-mkconfigerror" 9
+arch-chroot /mnt pacman -S grub efibootmgr --noconfirm
+arch-chroot /mnt grub-install --efi-directory=/boot/efi 
+arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 
-whiptail --title "ADD ROOT PWD" --infobox "\n Waitting Please" 12 35
 arch-chroot /mnt chpasswd <<EOF
 root:${ROOT_PASSWD}
 EOF
 sed "s/alias/export EDITOR=vim\nalias grep=\'grep --color=auto\'\nalias egrep=\'egrep --color=auto\'\nalias fgrep=\'fgrep --color=auto\'\nalias/g" /mnt/etc/skel/.bashrc > /mnt/root/.bashrc
 
-whiptail --title "HOST NAME" --infobox "\n Waitting Please" 12 35
 echo "${HOST_NAME}" >> /mnt/etc/hostname
 echo "127.0.0.1    localhost
 ::1    localhost
@@ -64,11 +57,9 @@ echo "127.0.0.1    localhost
 tmp1=$(cat /proc/cpuinfo | grep name | grep Intel >> /dev/null)
 if [ $? -eq 0 ]
 then
-    whiptail --title "Installing" --infobox "Installing intel-ucode, please wait" 12 35
-    arch-chroot /mnt pacman -S intel-ucode --noconfirm 1> /dev/null 2> ./errorfile || funerror "pacmanerror" 2
-else
-    whiptail --title "Installing" --infobox "Installing amd-ucode, please wait" 12 35
-    arch-chroot /mnt pacman -S amd-ucode --noconfirm 1> /dev/null 2> ./errorfile || funerror "pacmanerror" 2
+    arch-chroot /mnt pacman -S intel-ucode --noconfirm 
+	else
+    arch-chroot /mnt pacman -S amd-ucode --noconfirm 
 fi
 
 mkdir /mnt/root/install
