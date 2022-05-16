@@ -6,7 +6,7 @@ funerror(){
 }
 
 #setfont /usr/share/kbd/consolefonts/iso01-12x22.psfu.gz
-whiptail --title "FBI WARNING" --yesno "FIRST YOU SHOULD PARTITION THE DISK." 12 35 || exit 0
+#whiptail --title "FBI WARNING" --yesno "FIRST YOU SHOULD PARTITION THE DISK." 12 35 || exit 0
 
 whiptail --title "SET HOSTNAME" --infobox "\n WATTING PLEASE" 12 35
 HOST_NAME=$(whiptail --title "HOST NAME" --nocancel  --inputbox "Hostname:" 12 35 3>&1 1>&2 2>&3)
