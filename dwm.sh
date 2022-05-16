@@ -1,6 +1,6 @@
 #! /bin/bash
 #
-# clone dwm dmenu st (https://suckless.org)
+# install dwm for admin user
 #
 
 echo "GTK_IM_MODULE=fcitx
