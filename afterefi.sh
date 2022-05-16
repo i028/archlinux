@@ -45,9 +45,6 @@ installDWM(){
     cd ../dmenu && make clean install 
     cd ../st && make clean install
     cd ../../
-#	mkdir -p .config/alacritty && cp /usr/share/doc/alacritty/example/alacritty.yml .config/alacritty/
-#	sed -i "s/#font:/font:/g" .config/alacritty/alcritty.yml && sed -i "s/#size: 11\.0/size: 13\.0/g" .config/alacritty/alacritty.yml
-	#mkdir -p .config/picom && cp /etc/xdg/picom.conf .config/picom/
 }
 installKde(){
     pacman -S plasma dolphin konsole kdeconnect firefox chromium gwenview ntfs-3g ksystemlog ark kget kcalc kcolorchooser spectacle kate flameshot --noconfirm 
