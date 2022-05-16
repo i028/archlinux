@@ -31,7 +31,7 @@ pacman -Syy
 parted -s /dev/${DISK} mklabel gpt 2> ./errorfile && parted -s /dev/${DISK} mkpart ESP fat32 2048s 2099199s && parted -s /dev/${DISK} set 1 boot on && parted -s /dev/${DISK} mkpart primary ext4 2099200s 100%
 mkfs.fat -F32 /dev/${DISK}1
 mkfs.ext4 /dev/${DISK}2
-mount /dev/${DISK}2 /mnt --noconfirm && mkdir -p /mnt/boot/efi && mount /dev/${DISK}1 /mnt/boot/efi --noconfirm
+mount /dev/${DISK}2 /mnt && mkdir -p /mnt/boot/efi && mount /dev/${DISK}1 /mnt/boot/efi
 
 timedatectl set-ntp true
 
