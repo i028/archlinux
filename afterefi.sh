@@ -19,6 +19,8 @@ EOF
 usermod -aG wheel,users,storage,power,lp,adm,optical ${ADMIN_USER}
 sed -i "s/# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/g" /etc/sudoers
 
+clear
+
 echo "en_US.UTF-8 UTF-8
 zh_CN.UTF-8 UTF-8" >> /etc/locale.gen
 echo 'LANG=en_US.UTF-8' >> /etc/locale.conf
@@ -26,7 +28,7 @@ locale-gen
 
 # bash
 sed -i "s/alias/export EDITOR=vim\nalias grep=\'grep --color=auto\'\nalias egrep=\'egrep --color=auto\'\nalias fgrep=\'fgrep --color=auto\'\nalias/g" /etc/skel/.bashrc
-cp -r /etc/skel/. .
+cp -r /etc/skel/. ~/
 
 sed -i "s/#export/export/g" /mnt/etc/profile.d/freetype2.sh
 
@@ -35,7 +37,7 @@ pacman -S ttf-dejavu ttf-droid noto-fonts noto-fonts-extra noto-fonts-emoji noto
 pacman -S xorg xorg-xinit --noconfirm
 
 installDWM(){
-    pacman -S dolphin konsole firefox gwenview ntfs-3g ksystemlog ark kcalc kcolorchooser kate flameshot alacritty feh fcitx5-im fcitx5-rime fcitx5-chinese-addons fcitx5-material-color fcitx5-nord rofi picom rxvt-unicode krita archlinux-wallpaper --noconfirm 1> ./errorfile || funerror "pacmanerror" 2
+    pacman -S dolphin konsole firefox gwenview ntfs-3g ksystemlog ark kcalc kcolorchooser kate flameshot alacritty feh rofi picom rxvt-unicode krita archlinux-wallpaper fcitx5-im fcitx5-chinese-addons fcitx5-rime fcitx5-material-color fcitx5-nord --noconfirm 1> ./errorfile || funerror "pacmanerror" 2
 	echo "GTK_IM_MODULE=fcitx
 QT_IM_MODULE=fcitx
 XMODIFIERS=@im=fcitx
