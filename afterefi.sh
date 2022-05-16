@@ -35,7 +35,8 @@ pacman -S ttf-dejavu ttf-droid noto-fonts noto-fonts-extra noto-fonts-emoji noto
 pacman -S xorg xorg-xinit --noconfirm
 
 installDWM(){
-	whiptail --title "Install DWM" --infobox "\n WAITTING PLEASE" 12 35
+	#whiptail --title "Install DWM" --infobox "\n WAITTING PLEASE" 12 35
+	echo "\n\n\n DWM INSTALL \n\n\n\n\n"
     pacman -S xorg xorg-xinit dolphin konsole firefox gwenview ntfs-3g ksystemlog ark kcalc kcolorchooser kate flameshot alacritty feh fcitx5-im fcitx5-rime fcitx5-chinese-addons fcitx5-material-color fcitx5-nord rofi picom rxvt-unicode krita archlinux-wallpaper --noconfirm 1> ./errorfile || funerror "pacmanerror" 2
 	echo "GTK_IM_MODULE=fcitx
 QT_IM_MODULE=fcitx
