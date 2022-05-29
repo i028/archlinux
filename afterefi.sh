@@ -48,7 +48,7 @@ INPUT_METHOD	DEFAULT=fcitx5
 SDL_IM_MODULE	DEFAULT=fcitx5" >> ~/.pam_environment
     cp /etc/X11/xinit/xinitrc ~/.xinitrc
     sed -i "/geometry/d" ~/.xinitrc && sed -i "s/twm \&/\n\nfeh --bg-fill --randomize \/usr\/share\/backgrounds\/archlinux\/*\n\npicom \&\n\n\nexec dwm/g" ~/.xinitrc
-    git clone https://github.com/coss/adwm && cd adwm
+    git clone https://github.com/i028/adwm && cd adwm
     cd dwm/ && make clean install
 	cd ../dmenu && make clean install
 	cd ../st && make clean install
