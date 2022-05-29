@@ -1,4 +1,4 @@
-#! /bin/bashclear
+#! /bin/bash
 
 funerror(){
     whiptail --title $1 --textbox errorfile 20 60
