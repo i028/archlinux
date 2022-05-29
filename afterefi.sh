@@ -46,18 +46,18 @@ QT_IM_MODULE	DEFAULT=fcitx5
 XMODIFIERS	DEFAULT=@im=fcitx5
 INPUT_METHOD	DEFAULT=fcitx5
 SDL_IM_MODULE	DEFAULT=fcitx5" >> ~/.pam_environment
+    sed -i "/geometry/d" /etc/X11/xinit/xinitrc && sed -i "s/twm \&/\n\nfeh --bg-fill --randomize \/usr\/share\/backgrounds\/archlinux\/*\n\npicom \&\n\n\nexec dwm/g" /etc/X11/xinit/.xinitrc
     cp /etc/X11/xinit/xinitrc ~/.xinitrc
-    sed -i "/geometry/d" ~/.xinitrc && sed -i "s/twm \&/\n\nfeh --bg-fill --randomize \/usr\/share\/backgrounds\/archlinux\/*\n\npicom \&\n\n\nexec dwm/g" ~/.xinitrc
     git clone https://github.com/i028/adwm && cd adwm
     cd dwm/ && make clean install
-	cd ../dmenu && make clean install
-	cd ../st && make clean install
+    cd ../dmenu && make clean install
+    cd ../st && make clean install
     cd ~
-	mkdir -p ~/.config/alacritty && cp /usr/share/doc/alacritty/example/alacritty.yml ~/.config/alacritty/
-	sed -i "s/#font:/font:/g" ~/.config/alacritty/alcritty.yml && sed -i "s/#size: 11\.0/size: 14\.0/g" ~/.config/alacritty/alacritty.yml
-	mkdir -p ~/.config/picom && cp /etc/xdg/picom.conf ~/.config/picom/
-	sed -i "s/shadow = true/shadow = false/g" ~/.config/picom/picom.conf
-	sed -i "s/# opacity-rule = \[\]/opacity-rule = \[\"90:class_g = \'dwm\'\",\"90:class_g = \'Alacritty\'\",\"90:class_g = \'st-256colors\'\",\]/g"
+    mkdir -p ~/.config/alacritty && cp /usr/share/doc/alacritty/example/alacritty.yml ~/.config/alacritty/
+    sed -i "s/#font:/font:/g" ~/.config/alacritty/alcritty.yml && sed -i "s/#size: 11\.0/size: 14\.0/g" ~/.config/alacritty/alacritty.yml
+    mkdir -p ~/.config/picom && cp /etc/xdg/picom.conf ~/.config/picom/
+    sed -i "s/shadow = true/shadow = false/g" ~/.config/picom/picom.conf
+    sed -i "s/# opacity-rule = \[\]/opacity-rule = \[\"90:class_g = \'dwm\'\",\"90:class_g = \'Alacritty\'\",\"90:class_g = \'st-256colors\'\",\]/g"
 }
 installKde(){
     pacman -S plasma dolphin konsole kdeconnect firefox chromium gwenview ntfs-3g ksystemlog ark kget kcalc kcolorchooser spectacle kate flameshot --noconfirm

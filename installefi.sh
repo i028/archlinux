@@ -4,7 +4,7 @@ funerror(){
     whiptail --title $1 --textbox errorfile 20 60
     exit $2
 }
-systemctl stop reflector.service
+systemctl disable reflector.service
 #setfont /usr/share/kbd/consolefonts/iso01-12x22.psfu.gz
 #whiptail --title "FBI WARNING" --yesno "FIRST YOU SHOULD PARTITION THE DISK." 12 35 || exit 0
 
