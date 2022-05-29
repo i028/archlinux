@@ -39,8 +39,8 @@ echo "========  Xorg  ========"
 pacman -S xorg xorg-xinit --noconfirm
 
 installDWM(){
-	echo "========  App && Fcitx5  ========"
-    pacman -S vscodium dolphin konsole firefox gwenview ntfs-3g ksystemlog ark kcalc kcolorchooser kate flameshot alacritty feh rofi picom rxvt-unicode krita archlinux-wallpaper fcitx5-im fcitx5-chinese-addons fcitx5-rime fcitx5-material-color fcitx5-nord --noconfirm 1> ./errorfile || funerror "pacmanerror" 2
+    echo "========  App && Fcitx5  ========"
+    pacman -S dolphin konsole firefox gwenview ntfs-3g ksystemlog ark kcalc kcolorchooser kate flameshot alacritty feh rofi picom rxvt-unicode krita archlinux-wallpaper fcitx5-im fcitx5-chinese-addons fcitx5-rime fcitx5-material-color fcitx5-nord --noconfirm 1> ./errorfile || funerror "pacmanerror" 2
 		echo "GTK_IM_MODULE	DEFAULT=fcitx5
 QT_IM_MODULE	DEFAULT=fcitx5
 XMODIFIERS	DEFAULT=@im=fcitx5
@@ -48,7 +48,7 @@ INPUT_METHOD	DEFAULT=fcitx5
 SDL_IM_MODULE	DEFAULT=fcitx5" >> ~/.pam_environment
     cp /etc/X11/xinit/xinitrc ~/.xinitrc
     sed -i "/geometry/d" ~/.xinitrc && sed -i "s/twm \&/\n\nfeh --bg-fill --randomize \/usr\/share\/backgrounds\/archlinux\/*\n\npicom \&\n\n\nexec dwm/g" ~/.xinitrc
-    git clone https://gitee.com/cosss/adwm && cd adwm
+    git clone https://github.com/coss/adwm && cd adwm
     cd dwm/ && make clean install
 	cd ../dmenu && make clean install
 	cd ../st && make clean install
