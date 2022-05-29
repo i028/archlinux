@@ -41,7 +41,7 @@ pacman -S xorg xorg-xinit --noconfirm
 installDWM(){
 	echo "========  App && Fcitx5  ========"
     pacman -S vscodium dolphin konsole firefox gwenview ntfs-3g ksystemlog ark kcalc kcolorchooser kate flameshot alacritty feh rofi picom rxvt-unicode krita archlinux-wallpaper fcitx5-im fcitx5-chinese-addons fcitx5-rime fcitx5-material-color fcitx5-nord --noconfirm 1> ./errorfile || funerror "pacmanerror" 2
-	echo "GTK_IM_MODULE	DEFAULT=fcitx5
+		echo "GTK_IM_MODULE	DEFAULT=fcitx5
 QT_IM_MODULE	DEFAULT=fcitx5
 XMODIFIERS	DEFAULT=@im=fcitx5
 INPUT_METHOD	DEFAULT=fcitx5
