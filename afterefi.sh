@@ -40,20 +40,20 @@ pacman -S xorg xorg-xinit --noconfirm
 
 installDWM(){
     echo "========  App && Fcitx5  ========"
-    pacman -S dolphin konsole firefox gwenview ueberzug numlockx ntfs-3g ksystemlog ark kcalc kcolorchooser kate flameshot alacritty feh rofi picom rxvt-unicode krita archlinux-wallpaper fcitx5-im fcitx5-chinese-addons fcitx5-rime fcitx5-material-color fcitx5-nord --noconfirm 1> ./errorfile || funerror "pacmanerror" 2
+    pacman -S dolphin konsole firefox nitrogen gwenview ueberzug numlockx ntfs-3g ksystemlog ark kcalc kcolorchooser kate flameshot alacritty feh rofi picom rxvt-unicode krita archlinux-wallpaper fcitx5-im fcitx5-chinese-addons fcitx5-rime fcitx5-material-color fcitx5-nord --noconfirm 1> ./errorfile || funerror "pacmanerror" 2
 		echo "GTK_IM_MODULE	DEFAULT=fcitx5
 QT_IM_MODULE	DEFAULT=fcitx5
 XMODIFIERS	DEFAULT=@im=fcitx5
 INPUT_METHOD	DEFAULT=fcitx5
 SDL_IM_MODULE	DEFAULT=fcitx5" >> ~/.pam_environment
-    git clone https://github.com/i028/adwm && cd adwm
-		bash install.sh
-    cd ~
     sed -i "s/#font:/font:/g" /usr/share/doc/alacritty/example/alcritty.yml && sed -i "s/#size: 11\.0/size: 14\.0/g" /usr/share/doc/alacritty/example/alacritty.yml
     mkdir -p ~/.config/alacritty && cp /usr/share/doc/alacritty/example/alacritty.yml ~/.config/alacritty/
     sed -i "s/shadow = true/shadow = false/g" /etc/xdg/picom.conf
     sed -i "s/# opacity-rule = \[\]/opacity-rule = \[\"90:class_g = \'dwm\'\",\"90:class_g = \'Alacritty\'\",\"90:class_g = \'st-256colors\'\",\]/g" /etc/xdg/picom.conf
     mkdir -p ~/.config/picom && cp /etc/xdg/picom.conf ~/.config/picom/
+    git clone https://github.com/i028/adwm
+		cp -r adwm ../
+		cd adwm && bash install.sh
 }
 installKde(){
     pacman -S plasma dolphin konsole kdeconnect firefox chromium gwenview ntfs-3g ksystemlog ark kget kcalc kcolorchooser spectacle kate flameshot --noconfirm
