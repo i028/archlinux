@@ -40,14 +40,12 @@ pacman -S xorg xorg-xinit --noconfirm
 
 installDWM(){
     echo "========  App && Fcitx5  ========"
-    pacman -S dolphin konsole firefox gwenview ueberzug ntfs-3g ksystemlog ark kcalc kcolorchooser kate flameshot alacritty feh rofi picom rxvt-unicode krita archlinux-wallpaper fcitx5-im fcitx5-chinese-addons fcitx5-rime fcitx5-material-color fcitx5-nord --noconfirm 1> ./errorfile || funerror "pacmanerror" 2
+    pacman -S dolphin konsole firefox gwenview ueberzug numlockx ntfs-3g ksystemlog ark kcalc kcolorchooser kate flameshot alacritty feh rofi picom rxvt-unicode krita archlinux-wallpaper fcitx5-im fcitx5-chinese-addons fcitx5-rime fcitx5-material-color fcitx5-nord --noconfirm 1> ./errorfile || funerror "pacmanerror" 2
 		echo "GTK_IM_MODULE	DEFAULT=fcitx5
 QT_IM_MODULE	DEFAULT=fcitx5
 XMODIFIERS	DEFAULT=@im=fcitx5
 INPUT_METHOD	DEFAULT=fcitx5
 SDL_IM_MODULE	DEFAULT=fcitx5" >> ~/.pam_environment
-    sed -i "/geometry/d" /etc/X11/xinit/xinitrc && sed -i "s/twm \&/\n\nfeh --bg-fill --randomize \/usr\/share\/backgrounds\/archlinux\/*\n\npicom \&\n\n\nexec dwm/g" /etc/X11/xinit/xinitrc
-    cp /etc/X11/xinit/xinitrc ~/.xinitrc
     git clone https://github.com/i028/adwm && cd adwm
 		bash install.sh
     cd ~
