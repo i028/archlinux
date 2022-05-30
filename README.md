@@ -3,7 +3,7 @@
 from [MurphyWZhu/archlinux (github.com)](https://github.com/MurphyWZhu/archlinux)
 
 + install 
-  + chmod +x install.sh after.sh
+  + chmod +x installefi.sh afterefi.sh
 + The script only allocates 2 disk partitions(ESP->FAT32, SYSTEM-EXT4) for archlinux.
 
 
