@@ -120,7 +120,7 @@ pacman -S archlinuxcn-keyring --noconfirm
 
 #whiptail --title "Empty Cache" --infobox "wait a minutes" 12 35
 #pacman -Scc --noconfirm 1> /dev/null 2> ./errorfile || funerror "Empty Cache" 2
-cp -r ./install ../home/${ADMIN_USER}/
+cp -r ../install /home/${ADMIN_USER}/
 # rm -rf ../install
 
 #whiptail --title "SUCCESSFUL" --yesno "SUCCESSFUL!!!\n\nScript from {MurphyWZhu/archlinux}\nThanks!\n\nReboot now?" 15 40 && reboot || exit 0
