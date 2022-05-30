@@ -46,10 +46,10 @@ QT_IM_MODULE	DEFAULT=fcitx5
 XMODIFIERS	DEFAULT=@im=fcitx5
 INPUT_METHOD	DEFAULT=fcitx5
 SDL_IM_MODULE	DEFAULT=fcitx5" >> ~/.pam_environment
-    sed -i "s/#font:/font:/g" /usr/share/doc/alacritty/example/alcritty.yml && sed -i "s/#size: 11/size: 13/g" /usr/share/doc/alacritty/example/alacritty.yml
+    #sed -i "s/#font:/font:/g" /usr/share/doc/alacritty/example/alcritty.yml && sed -i "s/#size: 11/size: 13/g" /usr/share/doc/alacritty/example/alacritty.yml
     mkdir -p ~/.config/alacritty && cp /usr/share/doc/alacritty/example/alacritty.yml ~/.config/alacritty/
-    sed -i "s/shadow = true/shadow = false/g" /etc/xdg/picom.conf
-    sed -i "s/# opacity-rule = \[\]/opacity-rule = \[\"90:class_g = \'dwm\'\",\"90:class_g = \'Alacritty\'\",\"90:class_g = \'st-256colors\'\",\]/g" /etc/xdg/picom.conf
+    #sed -i "s/shadow = true/shadow = false/g" /etc/xdg/picom.conf
+    #sed -i "s/# opacity-rule = \[\]/opacity-rule = \[\"90:class_g = \'dwm\'\",\"90:class_g = \'Alacritty\'\",\"90:class_g = \'st-256colors\'\",\]/g" /etc/xdg/picom.conf
     mkdir -p ~/.config/picom && cp /etc/xdg/picom.conf ~/.config/picom/
     git clone https://github.com/i028/adwm
 		cp -r adwm ../
